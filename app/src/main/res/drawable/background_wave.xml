@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Fondo principal con degradado -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:startColor="#DDEFFF"
+                android:endColor="#A6D8FF"
+                android:angle="270" />
+        </shape>
+    </item>
+
+    <!-- Capa de curva superior -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:startColor="#FFFFFF"
+                android:endColor="#B2DAFF"
+                android:angle="270" />
+        </shape>
+        <corners android:topLeftRadius="300dp" android:topRightRadius="300dp" />
+    </item>
+
+    <!-- Curva inferior -->
+    <item android:bottom="1900dp">
+        <shape android:shape="rectangle">
+            <gradient
+                android:startColor="#A6D8FF"
+                android:endColor="#DDEFFF"
+                android:angle="90" />
+        </shape>
+        <corners android:bottomLeftRadius="200dp" android:bottomRightRadius="200dp" />
+    </item>
+</layer-list>

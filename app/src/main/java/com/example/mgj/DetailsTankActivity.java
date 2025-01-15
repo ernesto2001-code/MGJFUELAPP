@@ -23,7 +23,8 @@ public class DetailsTankActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_details_tank);
-        nameTextView = findViewById(R.id.nameTextView);
+        nameTextView = findViewById(R.id.txtTanques);
+
 
         // Obtén los datos del Intent
         String name = getIntent().getStringExtra("name");
