@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "197072750556",
+    "project_id": "mgjmobil-66bc6",
+    "storage_bucket": "mgjmobil-66bc6.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:197072750556:android:59ed2a2238bdf868833119",
+        "android_client_info": {
+          "package_name": "com.example.mgj"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAtonBJnmlemXd7CuKrR-U1QRvabUklI48"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

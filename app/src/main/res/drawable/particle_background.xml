@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Fondo azul (base) -->
+    <item>
+        <color android:color="#3C86F7" />
+    </item>
+
+    <!-- Partículas flotantes -->
+    <item>
+        <animated-vector xmlns:android="http://schemas.android.com/apk/res/android">
+            <vector
+                android:width="500dp"
+                android:height="500dp"
+                android:viewportWidth="500"
+                android:viewportHeight="500">
+                <!-- Dibuja partículas simples -->
+                <path
+                    android:pathData="M250,250 L250,250"
+                    android:strokeColor="#FFFFFF"
+                    android:strokeWidth="3" />
+            </vector>
+        </animated-vector>
+    </item>
+</layer-list>
