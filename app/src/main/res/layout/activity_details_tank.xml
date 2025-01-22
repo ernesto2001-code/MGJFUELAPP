@@ -6,99 +6,221 @@
     android:layout_height="match_parent"
     android:background="@drawable/background_wave">
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
+    <!-- Agregar un ScrollView -->
+    <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        android:fillViewport="true">
 
-        <!-- Título -->
         <LinearLayout
-            android:id="@+id/linearLayout2"
+            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/txtTanques"
+            <!-- Título -->
+            <LinearLayout
+                android:id="@+id/linearLayout2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginBottom="16dp"
-                android:textAlignment="center"
-                android:text="Tanque"
-                android:fontFamily="@font/poppins_semibold"
-                android:textSize="32sp"
-                android:textColor="@color/black"/>
-        </LinearLayout>
+                android:gravity="center"
+                android:orientation="horizontal">
 
-        <!-- RecyclerView para la lista de tanques color antes: 018786 -->
-        <com.orbitalsonic.waterwave.WaterWaveView
-            android:id="@+id/waterWaveView"
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
-            app:animatorEnable="true"
-            app:textHidden="false"
-            app:shapeType="circle"
-            app:frontColor="#80c5fc"
-            app:behideColor="#90cbf9"
-            app:borderColor="#80c5fc"
-            app:borderWidthSize="4dp"
-            app:textColor="#000000"
-            app:max="100"
-            app:progress="90"
-            app:strong="100"
-            app:shapePadding="10dp" />
-        <LinearLayout
-            android:id="@+id/linearLayout3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:paddingTop="20dp">
+                <TextView
+                    android:id="@+id/txtTanques"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginBottom="16dp"
+                    android:textAlignment="center"
+                    android:text="Tanque"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:textSize="32sp"
+                    android:textColor="@color/black"/>
+            </LinearLayout>
 
-            <TextView
-                android:id="@+id/txtcantidadlitros"
+            <!-- Nivel de agua -->
+            <com.orbitalsonic.waterwave.WaterWaveView
+                android:id="@+id/waterWaveView"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                app:animatorEnable="true"
+                app:textHidden="false"
+                app:shapeType="circle"
+                app:frontColor="#80c5fc"
+                app:behideColor="#90cbf9"
+                app:borderColor="#80c5fc"
+                app:borderWidthSize="4dp"
+                app:textColor="#39B400"
+                app:max="100"
+                app:progress="90"
+                app:strong="100"
+                app:shapePadding="10dp" />
+
+            <LinearLayout
+                android:id="@+id/linearLayout3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textAlignment="center"
-                android:text="Cantidad de litros actual"
-                android:fontFamily="@font/poppins_light"
-                android:textSize="30sp"
-                android:textColor="@color/black"/>
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingTop="20dp">
 
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/linearLayout4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:paddingTop="20dp">
+                <TextView
+                    android:id="@+id/txtcantidadlitros"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textAlignment="center"
+                    android:text="Cantidad de litros actual"
+                    android:fontFamily="@font/poppins_light"
+                    android:textSize="30sp"
+                    android:textColor="@color/black"/>
 
-            <TextView
-                android:id="@+id/txtLitros"
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textAlignment="center"
-                android:text="22500 Lts"
-                android:fontFamily="@font/poppins_semibold"
-                android:textSize="32sp"
-                android:textColor="@color/black"/>
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingTop="10dp">
+
+                <TextView
+                    android:id="@+id/txtLitros"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textAlignment="center"
+                    android:text="22500 Lts"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:textSize="32sp"
+                    android:textColor="@color/black"/>
+
+            </LinearLayout>
+
+            <!-- Card Última Carga -->
+            <LinearLayout
+                android:id="@+id/cardUltimaCarga"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:orientation="vertical"
+                android:padding="10dp"
+                android:background="@drawable/background_card"
+                android:elevation="4dp"
+                android:layout_gravity="center">
+
+                <TextView
+                    android:id="@+id/txtUltimaCargaTitulo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Última carga"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:textSize="24sp"
+                    android:textColor="@color/black"
+                    android:textAlignment="center"/>
+                <TextView
+                    android:id="@+id/txtUltimaCargaFecha"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Fecha: 15/01/2025"
+                    android:fontFamily="@font/poppins_light"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="8dp"/>
+
+                <TextView
+                    android:id="@+id/txtUltimaCargaResponsable"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Responsable: Juan Pérez"
+                    android:fontFamily="@font/poppins_light"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="4dp"/>
+
+
+            </LinearLayout>
+            <!-- Diseño de botones -->
+            <LinearLayout
+                android:id="@+id/botonesOpciones"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="16dp">
+
+                <!-- Botón "Ver cargas" -->
+                <LinearLayout
+                    android:id="@+id/bottomviewcharger"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:background="@drawable/background_card"
+                    android:padding="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:elevation="4dp">
+
+                    <ImageView
+                        android:id="@+id/iconVerCargas"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/baseline_find_in_page_24"
+                        android:paddingHorizontal="2dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Ver cargas"
+                        android:fontFamily="@font/poppins_light"
+                        android:textSize="14sp"
+                        android:paddingHorizontal="15dp"
+                        android:paddingTop="5dp"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+
+                <!-- Botón "Crear un reporte" -->
+                <LinearLayout
+                    android:id="@+id/bottoncreatereport"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:background="@drawable/background_card"
+                    android:padding="16dp"
+                    android:layout_marginStart="8dp"
+                    android:gravity="center"
+                    android:elevation="4dp">
+
+                    <ImageView
+                        android:id="@+id/iconCrearReporte"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/iconcreatereport"
+                        android:paddingLeft="0dp"
+                        android:paddingRight="0dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Crear un reporte"
+                        android:fontFamily="@font/poppins_light"
+                        android:textSize="14sp"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+            </LinearLayout>
 
         </LinearLayout>
-
-    </LinearLayout>
-
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
