@@ -207,7 +207,7 @@
                         android:id="@+id/iconCrearReporte"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/iconcreatereport"
+                        android:src="@drawable/report"
                         android:paddingLeft="0dp"
                         android:paddingRight="0dp"/>
 

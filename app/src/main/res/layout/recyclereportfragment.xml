@@ -24,7 +24,7 @@
                 android:id="@+id/icon_fuel"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:src="@drawable/GasPump" />
+                android:src="@drawable/gaas" />
 
             <TextView
                 android:id="@+id/text_fuel"
@@ -73,10 +73,10 @@
                 android:id="@+id/icon_car"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:src="@drawable/Driver" />
+                android:src="@drawable/operador" />
 
             <TextView
-                android:id="@+id/text_car"
+                android:id="@+id/text_operador"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -93,12 +93,12 @@
 
                 <ImageView
                     android:id="@+id/icon_company"
-                    android:layout_width="50dp"
+                    android:layout_width="59dp"
                     android:layout_height="24dp"
                     android:src="@drawable/logocicularmgj" />
 
                 <TextView
-                    android:id="@+id/text_company"
+                    android:id="@+id/text_mgj"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"

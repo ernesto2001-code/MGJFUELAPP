@@ -1,6 +1,6 @@
 package com.example.mgj.model;
 
-public class Tank {
+public class    Tank {
     String name;
     int capacity, current_level;
     public Tank(){}
