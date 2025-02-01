@@ -2,6 +2,7 @@ package com.example.mgj.adapter;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mgj.DetailsReport;
 import com.example.mgj.R;
 import com.example.mgj.model.Report;
 
@@ -57,6 +59,36 @@ public class ReportAdapter extends FirestoreRecyclerAdapter<Report, ReportAdapte
         } else {
             viewHolder.date.setText("Sin fecha"); // Si el timestamp es nulo
         }
+        // Configura el click listener para el elemento
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (report.getTimestamp() != null) {
+                    // Convertir el timestamp a una fecha legible
+                    @SuppressLint("SimpleDateFormat")
+                    java.text.SimpleDateFormat dateFormat = new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm");
+                    String formattedDate2 = dateFormat.format(report.getTimestamp().toDate());
+
+                } else {
+                     // Si el timestamp es nulo
+                }
+                Intent i = new Intent(activity, DetailsReport.class);
+                i.putExtra("id", report.getId());
+                i.putExtra("operator", report.getOperator_name());
+                i.putExtra("folio",report.getFolio());
+                i.putExtra("litros", report.getLiters_filled());
+                i.putExtra("placas",report.getLicense_plate());
+                i.putExtra("compañia",report.getCompany());
+                i.putExtra("unidad", report.getUnidad());
+                i.putExtra("creadopor", report.getCreated_by());
+                i.putExtra("departede", report.getChargefromby());
+                i.putExtra("fechayhora", report.getTimestamp());
+                activity.startActivity(i);
+                if (listener != null) {
+                    listener.onItemClick(getSnapshots().getSnapshot(position), position);
+                }
+            }
+        });
     }
 
     @NonNull

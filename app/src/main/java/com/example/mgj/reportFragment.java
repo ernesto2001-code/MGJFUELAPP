@@ -19,6 +19,7 @@ import com.example.mgj.adapter.ReportAdapter;
 import com.example.mgj.model.Report;
 import com.example.mgj.model.Tank;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -28,6 +29,7 @@ public class reportFragment extends Fragment {
     RecyclerView recyclerView;
     ReportAdapter reportAdapter;
     FirebaseFirestore fStore;
+    FloatingActionButton fabAdd;
 
 
 
@@ -37,6 +39,7 @@ public class reportFragment extends Fragment {
 
         fStore = FirebaseFirestore.getInstance();
         recyclerView = view.findViewById(R.id.recyclerView);
+        fabAdd = view.findViewById(R.id.fabAdd);
 
 
         // Configuración del RecyclerView
@@ -44,6 +47,14 @@ public class reportFragment extends Fragment {
         //esto re remplaza por wl wrapcontentlinearlayoutmanager con esto no crasheo el app
         recyclerView.setLayoutManager(new reportFragment.WrapContentLinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,false));
         recyclerView.setHasFixedSize(true);
+        fabAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getActivity(), formReport.class);
+                startActivity(i);
+
+            }
+        });
 
 
         init();
@@ -71,12 +82,7 @@ public class reportFragment extends Fragment {
         reportAdapter.setOnItemClickListener(new ReportAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
-                Report report = documentSnapshot.toObject(Report.class);
-                if (report != null) {
-                    // Abre la actividad con más detalles
-                    Intent intent = new Intent(getActivity(), DetailsTankActivity.class);
-                    startActivity(intent);
-                }
+
             }
         });
 

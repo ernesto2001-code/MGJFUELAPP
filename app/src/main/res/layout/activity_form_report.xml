@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".formReport"
+        android:paddingTop="20dp"
+        >
+
+        <ImageView
+            android:id="@+id/salir"
+            android:layout_width="34dp"
+            android:layout_height="33dp"
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/baseline_arrow_back_24"
+            app:layout_constraintBottom_toTopOf="@+id/DatosVehiculo"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/DatosVehiculo"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="32dp"
+            android:fontFamily="@font/poppins_semibold"
+            android:text="Datos de la carga del tanque"
+            android:textColor="@color/black"
+            android:textSize="22dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/ingresadatosvehiculo"
+            android:layout_width="0dp"
+            android:layout_height="18dp"
+            android:layout_marginTop="1dp"
+            android:text="Ingresa corectamente los datos de la carga"
+            android:textColor="#90000000"
+            android:fontFamily="@font/poppins_semibold"
+            android:textSize="13dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/DatosVehiculo" />
+
+        <!--Ingreso de datos-->
+
+        <TextView
+            android:id="@+id/Operador"
+            android:layout_width="0dp"
+            android:layout_height="21dp"
+            android:layout_marginTop="33dp"
+            android:fontFamily="@font/poppins"
+            android:text="Opeador"
+            android:textColor="#011855"
+            android:textSize="18dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ingresadatosvehiculo" />
+
+        <EditText
+            android:id="@+id/EditTextOperador"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="1dp"
+            android:backgroundTint="#01B1EA"
+            android:fontFamily="@font/poppins"
+            android:hint="Nombre del operador"
+            android:textColor="#000000"
+            android:textSize="18dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Operador" />
+
+        <TextView
+            android:id="@+id/Numerodeplaca"
+            android:layout_width="0dp"
+            android:layout_height="21dp"
+            android:layout_marginTop="28dp"
+            android:fontFamily="@font/poppins"
+            android:text="Número de placa"
+            android:textColor="#011855"
+            android:textSize="18dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/EditTextOperador" />
+
+        <EditText
+            android:id="@+id/EditTextNumeroPlaca"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="1dp"
+            android:fontFamily="@font/poppins"
+            android:hint="AA-AA-AA"
+            android:textColor="#000000"
+            android:textSize="18dp"
+            android:backgroundTint="#01B1EA"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Numerodeplaca" />
+
+        <TextView
+            android:id="@+id/Departede"
+            android:layout_width="0dp"
+            android:layout_height="23dp"
+            android:layout_marginTop="28dp"
+            android:fontFamily="@font/poppins"
+            android:text="Departe de"
+            android:textColor="#011855"
+            android:textSize="18dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/EditTextNumeroPlaca" />
+
+        <Spinner
+            android:id="@+id/Spinerpartede"
+            android:layout_width="match_parent"
+            android:layout_height="61dp"
+            android:layout_marginTop="1dp"
+            android:backgroundTint="#8C8C8C"
+            android:outlineAmbientShadowColor="@color/white"
+            android:outlineSpotShadowColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Departede" />
+
+        <TextView
+            android:id="@+id/Litroscargados"
+            android:layout_width="0dp"
+            android:layout_height="23dp"
+            android:layout_marginTop="28dp"
+            android:fontFamily="@font/poppins"
+            android:text="Litros cargados"
+            android:textColor="#011855"
+            android:textSize="18dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Spinerpartede" />
+
+        <EditText
+            android:id="@+id/EditTextLitros"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="1dp"
+            android:fontFamily="@font/poppins"
+            android:hint="Lts"
+            android:textColor="#000000"
+            android:backgroundTint="#01B1EA"
+            android:textSize="18dp"
+            android:inputType="number"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Litroscargados" />
+        <TextView
+            android:id="@+id/numerofolio"
+            android:layout_width="0dp"
+            android:layout_height="23dp"
+            android:layout_marginTop="28dp"
+            android:fontFamily="@font/poppins"
+            android:text="Número de folio"
+            android:textColor="#011855"
+            android:textSize="18dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/EditTextLitros" />
+
+        <EditText
+            android:id="@+id/EditTextFolio"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="1dp"
+            android:fontFamily="@font/poppins"
+            android:hint="00"
+            android:textColor="#000000"
+            android:backgroundTint="#01B1EA"
+            android:textSize="18dp"
+            android:inputType="number"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/numerofolio" />
+        <TextView
+            android:id="@+id/mgjyempresa"
+            android:layout_width="0dp"
+            android:layout_height="23dp"
+            android:layout_marginTop="28dp"
+            android:fontFamily="@font/poppins"
+            android:text="Empresa externa"
+            android:textColor="#011855"
+            android:textSize="18dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/EditTextFolio" />
+
+        <EditText
+            android:id="@+id/EditTextmgjyempresa"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="1dp"
+            android:fontFamily="@font/poppins"
+            android:hint="Nombre de la empresa"
+            android:textColor="#000000"
+            android:backgroundTint="#01B1EA"
+            android:textSize="18dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mgjyempresa" />
+
+
+
+        <Button
+            android:id="@+id/btn_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:backgroundTint="#01B1EA"
+            android:text="Guardar"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="18dp"
+            app:cornerRadius="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.49"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/EditTextmgjyempresa" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
