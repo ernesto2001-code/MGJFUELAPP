@@ -5,19 +5,26 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.AttrRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.StyleRes;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.PopupMenu;
+import android.widget.Toast;
 
 import com.example.mgj.adapter.ReportAdapter;
 import com.example.mgj.model.Report;
-import com.example.mgj.model.Tank;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -30,7 +37,8 @@ public class reportFragment extends Fragment {
     ReportAdapter reportAdapter;
     FirebaseFirestore fStore;
     FloatingActionButton fabAdd;
-
+    ImageButton Button;
+    private int selectedTankId = R.id.all; // Guardará el ID del ítem seleccionado
 
 
     @Override
@@ -40,6 +48,7 @@ public class reportFragment extends Fragment {
         fStore = FirebaseFirestore.getInstance();
         recyclerView = view.findViewById(R.id.recyclerView);
         fabAdd = view.findViewById(R.id.fabAdd);
+        Button = view.findViewById(R.id.menuButton);
 
 
         // Configuración del RecyclerView
@@ -55,16 +64,47 @@ public class reportFragment extends Fragment {
 
             }
         });
+        Button.setOnClickListener(v -> showPopupMenu());
 
 
         init();
         return view;
     }
+
+    private void showPopupMenu() {
+        PopupMenu popupMenu = new PopupMenu(getActivity(), Button, Gravity.START, 0, R.style.Popup_Menu);
+        popupMenu.getMenuInflater().inflate(R.menu.tank_menu, popupMenu.getMenu());
+
+        // Mantener el ítem seleccionado
+        popupMenu.getMenu().findItem(selectedTankId).setChecked(true);
+
+        popupMenu.setOnMenuItemClickListener(item -> {
+            selectedTankId = item.getItemId(); // Guarda la selección
+            item.setChecked(true); // Marca como seleccionado
+
+            switch (item.getItemId()) {
+                case R.id.all:
+                    Toast.makeText(getActivity(), "Todos los tanques seleccionados", Toast.LENGTH_SHORT).show();
+                    return true;
+                case R.id.tanque1:
+                    Toast.makeText(getActivity(), "Tanque 1 seleccionado", Toast.LENGTH_SHORT).show();
+                    return true;
+                case R.id.tanque2:
+                    Toast.makeText(getActivity(), "Tanque 2 seleccionado", Toast.LENGTH_SHORT).show();
+                    return true;
+                default:
+                    return false;
+            }
+        });
+
+        popupMenu.show();
+    }
+
     @SuppressLint("NotifyDataSetChanged")
     private void init() {
         // Acceder a la subcolección "reports" dentro de "tank1" en "tanks"
         String tankId = "tank1"; // ID dinámico
-        Query query = fStore.collection("tanks")
+            Query query = fStore.collection("tanks")
                 .document(tankId)
                 .collection("reports");
 
@@ -88,6 +128,10 @@ public class reportFragment extends Fragment {
 
 
         reportAdapter.notifyDataSetChanged();
+
+    }
+    public void PopupMenu(@NonNull Context context, @NonNull View anchor, int gravity,
+                     @AttrRes int popupStyleAttr, @StyleRes int popupStyleRes){
 
     }
     public static class WrapContentLinearLayoutManager extends LinearLayoutManager {

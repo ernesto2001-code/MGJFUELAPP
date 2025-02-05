@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Estilo personalizado para PopupMenu -->
+    <style name="Popup_Menu" parent="Widget.AppCompat.PopupMenu">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:popupBackground">@drawable/popup_menu_background</item>
+    </style>
+</resources>

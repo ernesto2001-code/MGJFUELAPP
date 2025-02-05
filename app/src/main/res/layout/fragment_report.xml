@@ -27,18 +27,34 @@
             android:id="@+id/linearLayout2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/txtTanques"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="6dp"
+                android:fontFamily="@font/poppins_semibold"
                 android:paddingLeft="15dp"
                 android:text="Reportes"
-                android:fontFamily="@font/poppins_semibold"
-                android:textSize="32sp"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                android:textSize="32sp" />
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <ImageButton
+                android:id="@+id/menuButton"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginEnd="15dp"
+                android:background="@drawable/circle_piple"
+                android:contentDescription="Menú desplegable"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:menu="@menu/tank_menu"
+                app:srcCompat="@drawable/menu_40px" />
 
         </LinearLayout>
 
@@ -74,8 +90,11 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_margin="16dp"
-        app:srcCompat="@drawable/plus"
+        app:srcCompat="@drawable/outline_add_24"
+        app:tint="@null"
         android:contentDescription="t"
-        android:backgroundTint="@color/purple_500"/>
+        android:backgroundTint="@color/purple_500" />
+
+    <!-- Cambia a tu ícono deseado -->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

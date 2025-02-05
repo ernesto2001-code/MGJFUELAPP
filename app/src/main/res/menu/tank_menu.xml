@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/all"
+        android:checkable="true"
+        android:title="Todos los tanques" />
+
+    <item
+        android:id="@+id/tanque1"
+        android:title="Tanque 1"
+        android:checkable="true" />
+
+    <item
+        android:id="@+id/tanque2"
+        android:title="Tanque 2"
+        android:checkable="true" />
+</menu>
