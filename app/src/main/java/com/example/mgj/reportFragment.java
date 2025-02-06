@@ -27,7 +27,6 @@ import com.example.mgj.adapter.ReportAdapter;
 import com.example.mgj.model.Report;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
@@ -38,8 +37,7 @@ public class reportFragment extends Fragment {
     FirebaseFirestore fStore;
     FloatingActionButton fabAdd;
     ImageButton Button;
-    private int selectedTankId = R.id.all; // Guardará el ID del ítem seleccionado
-
+    private int selectedTankId = R.id.all; // ID del ítem seleccionado en el menú
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -50,24 +48,17 @@ public class reportFragment extends Fragment {
         fabAdd = view.findViewById(R.id.fabAdd);
         Button = view.findViewById(R.id.menuButton);
 
-
-        // Configuración del RecyclerView
-        //recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        //esto re remplaza por wl wrapcontentlinearlayoutmanager con esto no crasheo el app
-        recyclerView.setLayoutManager(new reportFragment.WrapContentLinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,false));
+        recyclerView.setLayoutManager(new WrapContentLinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setHasFixedSize(true);
-        fabAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(getActivity(), formReport.class);
-                startActivity(i);
 
-            }
+        fabAdd.setOnClickListener(view1 -> {
+            Intent i = new Intent(getActivity(), formReport.class);
+            startActivity(i);
         });
+
         Button.setOnClickListener(v -> showPopupMenu());
 
-
-        init();
+        init("tanks"); // Iniciar mostrando todos los reportes
         return view;
     }
 
@@ -75,40 +66,42 @@ public class reportFragment extends Fragment {
         PopupMenu popupMenu = new PopupMenu(getActivity(), Button, Gravity.START, 0, R.style.Popup_Menu);
         popupMenu.getMenuInflater().inflate(R.menu.tank_menu, popupMenu.getMenu());
 
-        // Mantener el ítem seleccionado
         popupMenu.getMenu().findItem(selectedTankId).setChecked(true);
 
         popupMenu.setOnMenuItemClickListener(item -> {
             selectedTankId = item.getItemId(); // Guarda la selección
             item.setChecked(true); // Marca como seleccionado
 
-            switch (item.getItemId()) {
-                case R.id.all:
-                    Toast.makeText(getActivity(), "Todos los tanques seleccionados", Toast.LENGTH_SHORT).show();
-                    return true;
-                case R.id.tanque1:
-                    Toast.makeText(getActivity(), "Tanque 1 seleccionado", Toast.LENGTH_SHORT).show();
-                    return true;
-                case R.id.tanque2:
-                    Toast.makeText(getActivity(), "Tanque 2 seleccionado", Toast.LENGTH_SHORT).show();
-                    return true;
-                default:
-                    return false;
+            String selectedTank;
+            if (item.getItemId() == R.id.all) {
+                selectedTank = "tanks"; // Mostrar todos los reportes
+            } else if (item.getItemId() == R.id.tanque1) {
+                selectedTank = "tank1";
+            } else if (item.getItemId() == R.id.tanque2) {
+                selectedTank = "tank2";
+            } else {
+                return false;
             }
+
+            updateQuery(selectedTank); // Actualiza la consulta en Firestore
+            return true;
         });
 
         popupMenu.show();
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    private void init() {
-        // Acceder a la subcolección "reports" dentro de "tank1" en "tanks"
-        String tankId = "tank1"; // ID dinámico
-            Query query = fStore.collection("tanks")
-                .document(tankId)
-                .collection("reports");
-
-
+    private void init(String tankId) {
+        Query query;
+        if (tankId.equals("tanks")) {
+            // Si se selecciona "Todos", obtener todos los reportes de todos los tanques
+            query = fStore.collectionGroup("reports");
+        } else {
+            // Obtener solo los reportes del tanque seleccionado
+            query = fStore.collection("tanks")
+                    .document(tankId)
+                    .collection("reports");
+        }
 
         FirestoreRecyclerOptions<Report> firestoreRecyclerOptions =
                 new FirestoreRecyclerOptions.Builder<Report>()
@@ -118,22 +111,27 @@ public class reportFragment extends Fragment {
         reportAdapter = new ReportAdapter(firestoreRecyclerOptions, getActivity());
         recyclerView.setAdapter(reportAdapter);
 
-        // Configura el listener
-        reportAdapter.setOnItemClickListener(new ReportAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
-
-            }
-        });
-
-
         reportAdapter.notifyDataSetChanged();
-
     }
-    public void PopupMenu(@NonNull Context context, @NonNull View anchor, int gravity,
-                     @AttrRes int popupStyleAttr, @StyleRes int popupStyleRes){
 
+    private void updateQuery(String tankId) {
+        Query query;
+        if (tankId.equals("tanks")) {
+            query = fStore.collectionGroup("reports"); // Obtiene reportes de todos los tanques
+        } else {
+            query = fStore.collection("tanks")
+                    .document(tankId)
+                    .collection("reports");
+        }
+
+        FirestoreRecyclerOptions<Report> firestoreRecyclerOptions =
+                new FirestoreRecyclerOptions.Builder<Report>()
+                        .setQuery(query, Report.class)
+                        .build();
+
+        reportAdapter.updateAdapterOptions(firestoreRecyclerOptions);// Actualiza la consulta del adaptador
     }
+
     public static class WrapContentLinearLayoutManager extends LinearLayoutManager {
         public WrapContentLinearLayoutManager(Context context) {
             super(context);
@@ -156,6 +154,7 @@ public class reportFragment extends Fragment {
             }
         }
     }
+
     @Override
     public void onStart() {
         super.onStart();
