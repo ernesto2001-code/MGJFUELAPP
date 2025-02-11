@@ -74,6 +74,9 @@ public class ReportAdapter extends FirestoreRecyclerAdapter<Report, ReportAdapte
                 case "mgj":
                     borderColor = activity.getResources().getColor(R.color.purple_500);
                     break;
+                case "ulises":
+                    borderColor = activity.getResources().getColor(R.color.red);
+                    break;
                 default:
                     borderColor = activity.getResources().getColor(R.color.gray); // Borde por defecto
                     break;
@@ -117,6 +120,11 @@ public class ReportAdapter extends FirestoreRecyclerAdapter<Report, ReportAdapte
                 }
             }
         });
+    }
+    public void updateWithCustomList(List<Report> reports) {
+        this.getSnapshots().clear(); // Limpiar la lista actual
+        this.getSnapshots().addAll(reports); // Agregar la nueva lista de resultados
+        notifyDataSetChanged(); // Notificar al adaptador para actualizar la vista
     }
 
     @NonNull

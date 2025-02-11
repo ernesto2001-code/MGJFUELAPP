@@ -5,9 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.annotation.AttrRes;
 import androidx.annotation.NonNull;
-import androidx.annotation.StyleRes;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,7 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
-import android.widget.Toast;
+import android.widget.SearchView;
 
 import com.example.mgj.adapter.ReportAdapter;
 import com.example.mgj.model.Report;
@@ -37,6 +35,7 @@ public class reportFragment extends Fragment {
     FirebaseFirestore fStore;
     FloatingActionButton fabAdd;
     ImageButton Button;
+    SearchView searchview;
     private int selectedTankId = R.id.all; // ID del ítem seleccionado en el menú
 
     @Override
@@ -47,6 +46,7 @@ public class reportFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerView);
         fabAdd = view.findViewById(R.id.fabAdd);
         Button = view.findViewById(R.id.menuButton);
+        searchview = view.findViewById(R.id.searchview);
 
         recyclerView.setLayoutManager(new WrapContentLinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setHasFixedSize(true);
@@ -55,8 +55,21 @@ public class reportFragment extends Fragment {
             Intent i = new Intent(getActivity(), formReport.class);
             startActivity(i);
         });
-
         Button.setOnClickListener(v -> showPopupMenu());
+
+        // Configurar SearchView
+        searchview.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filterReports(newText); // Filtrar resultados según la búsqueda
+                return true;
+            }
+        });
 
         init("tanks"); // Iniciar mostrando todos los reportes
         return view;
@@ -65,7 +78,6 @@ public class reportFragment extends Fragment {
     private void showPopupMenu() {
         PopupMenu popupMenu = new PopupMenu(getActivity(), Button, Gravity.START, 0, R.style.Popup_Menu);
         popupMenu.getMenuInflater().inflate(R.menu.tank_menu, popupMenu.getMenu());
-
         popupMenu.getMenu().findItem(selectedTankId).setChecked(true);
 
         popupMenu.setOnMenuItemClickListener(item -> {
@@ -94,13 +106,11 @@ public class reportFragment extends Fragment {
     private void init(String tankId) {
         Query query;
         if (tankId.equals("tanks")) {
-            // Si se selecciona "Todos", obtener todos los reportes de todos los tanques
+            // Obtener todos los reportes
             query = fStore.collectionGroup("reports");
         } else {
-            // Obtener solo los reportes del tanque seleccionado
-            query = fStore.collection("tanks")
-                    .document(tankId)
-                    .collection("reports");
+            // Obtener solo los reportes de un tanque específico
+            query = fStore.collection("tanks").document(tankId).collection("reports");
         }
 
         FirestoreRecyclerOptions<Report> firestoreRecyclerOptions =
@@ -110,18 +120,15 @@ public class reportFragment extends Fragment {
 
         reportAdapter = new ReportAdapter(firestoreRecyclerOptions, getActivity());
         recyclerView.setAdapter(reportAdapter);
-
         reportAdapter.notifyDataSetChanged();
     }
 
     private void updateQuery(String tankId) {
         Query query;
         if (tankId.equals("tanks")) {
-            query = fStore.collectionGroup("reports"); // Obtiene reportes de todos los tanques
+            query = fStore.collectionGroup("reports"); // Obtiene todos los reportes
         } else {
-            query = fStore.collection("tanks")
-                    .document(tankId)
-                    .collection("reports");
+            query = fStore.collection("tanks").document(tankId).collection("reports");
         }
 
         FirestoreRecyclerOptions<Report> firestoreRecyclerOptions =
@@ -129,8 +136,26 @@ public class reportFragment extends Fragment {
                         .setQuery(query, Report.class)
                         .build();
 
-        reportAdapter.updateAdapterOptions(firestoreRecyclerOptions);// Actualiza la consulta del adaptador
+        reportAdapter.updateAdapterOptions(firestoreRecyclerOptions); // Actualiza la consulta
     }
+    
+    private void filterReports(String searchText) {
+        if (searchText == null || searchText.isEmpty()) {
+            updateQuery("tanks"); // Si no hay búsqueda, mostrar todos
+            return;
+        }
+
+        Query query = fStore.collectionGroup("reports")
+                .whereArrayContains("searchkeywords", searchText.toLowerCase());
+
+        FirestoreRecyclerOptions<Report> firestoreRecyclerOptions =
+                new FirestoreRecyclerOptions.Builder<Report>()
+                        .setQuery(query, Report.class)
+                        .build();
+
+        reportAdapter.updateAdapterOptions(firestoreRecyclerOptions);
+    }
+
 
     public static class WrapContentLinearLayoutManager extends LinearLayoutManager {
         public WrapContentLinearLayoutManager(Context context) {

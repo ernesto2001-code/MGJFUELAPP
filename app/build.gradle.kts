@@ -9,8 +9,9 @@ android {
 
     defaultConfig {
         applicationId = "com.example.mgj"
-        minSdk = 24
+        minSdk = 28
         targetSdk = 34
+
         versionCode = 1
         versionName = "1.0"
 
@@ -43,6 +44,7 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("com.google.firebase:firebase-auth:22.3.0")
     implementation("com.google.firebase:firebase-firestore:24.10.1")
+    implementation(libs.car.ui.lib)
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
