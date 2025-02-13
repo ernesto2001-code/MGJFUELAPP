@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -36,7 +37,9 @@ public class reportFragment extends Fragment {
     FloatingActionButton fabAdd;
     ImageButton Button;
     SearchView searchview;
-    private int selectedTankId = R.id.all; // ID del ítem seleccionado en el menú
+    private int selectedTankId = R.id.all;
+    private final Handler searchHandler = new Handler();
+    private Runnable searchRunnable;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -57,7 +60,6 @@ public class reportFragment extends Fragment {
         });
         Button.setOnClickListener(v -> showPopupMenu());
 
-        // Configurar SearchView
         searchview.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -66,12 +68,16 @@ public class reportFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                filterReports(newText); // Filtrar resultados según la búsqueda
+                if (searchRunnable != null) {
+                    searchHandler.removeCallbacks(searchRunnable);
+                }
+                searchRunnable = () -> filterReports(newText);
+                searchHandler.postDelayed(searchRunnable, 500);
                 return true;
             }
         });
 
-        init("tanks"); // Iniciar mostrando todos los reportes
+        init("tanks");
         return view;
     }
 
@@ -81,21 +87,11 @@ public class reportFragment extends Fragment {
         popupMenu.getMenu().findItem(selectedTankId).setChecked(true);
 
         popupMenu.setOnMenuItemClickListener(item -> {
-            selectedTankId = item.getItemId(); // Guarda la selección
-            item.setChecked(true); // Marca como seleccionado
+            selectedTankId = item.getItemId();
+            item.setChecked(true);
 
-            String selectedTank;
-            if (item.getItemId() == R.id.all) {
-                selectedTank = "tanks"; // Mostrar todos los reportes
-            } else if (item.getItemId() == R.id.tanque1) {
-                selectedTank = "tank1";
-            } else if (item.getItemId() == R.id.tanque2) {
-                selectedTank = "tank2";
-            } else {
-                return false;
-            }
-
-            updateQuery(selectedTank); // Actualiza la consulta en Firestore
+            String selectedTank = (item.getItemId() == R.id.all) ? "tanks" : (item.getItemId() == R.id.tanque1) ? "tank1" : "tank2";
+            updateQuery(selectedTank);
             return true;
         });
 
@@ -104,14 +100,7 @@ public class reportFragment extends Fragment {
 
     @SuppressLint("NotifyDataSetChanged")
     private void init(String tankId) {
-        Query query;
-        if (tankId.equals("tanks")) {
-            // Obtener todos los reportes
-            query = fStore.collectionGroup("reports");
-        } else {
-            // Obtener solo los reportes de un tanque específico
-            query = fStore.collection("tanks").document(tankId).collection("reports");
-        }
+        Query query = tankId.equals("tanks") ? fStore.collectionGroup("reports") : fStore.collection("tanks").document(tankId).collection("reports");
 
         FirestoreRecyclerOptions<Report> firestoreRecyclerOptions =
                 new FirestoreRecyclerOptions.Builder<Report>()
@@ -120,28 +109,23 @@ public class reportFragment extends Fragment {
 
         reportAdapter = new ReportAdapter(firestoreRecyclerOptions, getActivity());
         recyclerView.setAdapter(reportAdapter);
-        reportAdapter.notifyDataSetChanged();
     }
 
     private void updateQuery(String tankId) {
-        Query query;
-        if (tankId.equals("tanks")) {
-            query = fStore.collectionGroup("reports"); // Obtiene todos los reportes
-        } else {
-            query = fStore.collection("tanks").document(tankId).collection("reports");
-        }
+        Query query = tankId.equals("tanks") ? fStore.collectionGroup("reports") : fStore.collection("tanks").document(tankId).collection("reports");
 
         FirestoreRecyclerOptions<Report> firestoreRecyclerOptions =
                 new FirestoreRecyclerOptions.Builder<Report>()
                         .setQuery(query, Report.class)
                         .build();
 
-        reportAdapter.updateAdapterOptions(firestoreRecyclerOptions); // Actualiza la consulta
+        reportAdapter.updateAdapterOptions(firestoreRecyclerOptions);
+        reportAdapter.notifyDataSetChanged();
     }
-    
+
     private void filterReports(String searchText) {
         if (searchText == null || searchText.isEmpty()) {
-            updateQuery("tanks"); // Si no hay búsqueda, mostrar todos
+            updateQuery("tanks");
             return;
         }
 
@@ -155,7 +139,6 @@ public class reportFragment extends Fragment {
 
         reportAdapter.updateAdapterOptions(firestoreRecyclerOptions);
     }
-
 
     public static class WrapContentLinearLayoutManager extends LinearLayoutManager {
         public WrapContentLinearLayoutManager(Context context) {
@@ -183,12 +166,16 @@ public class reportFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        reportAdapter.startListening();
+        if (reportAdapter != null) {
+            reportAdapter.startListening();
+        }
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        reportAdapter.stopListening();
+        if (reportAdapter != null) {
+            reportAdapter.stopListening();
+        }
     }
 }

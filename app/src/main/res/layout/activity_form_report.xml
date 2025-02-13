@@ -26,11 +26,21 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="MissingConstraints" />
+        <ImageButton
+            android:id="@+id/menuButton"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:background="@drawable/circle_piple"
+            android:contentDescription="Menú desplegable"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:menu="@menu/tank_menu"
+            app:srcCompat="@drawable/outline_sort_24" />
 
         <TextView
             android:id="@+id/DatosVehiculo"
             android:layout_width="0dp"
-            android:layout_height="35dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:fontFamily="@font/poppins_semibold"
             android:text="Datos de la carga del tanque"
@@ -43,9 +53,9 @@
         <TextView
             android:id="@+id/ingresadatosvehiculo"
             android:layout_width="0dp"
-            android:layout_height="18dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="1dp"
-            android:text="Ingresa corectamente los datos de la carga"
+            android:text="Ingresa correctamente los datos de la carga"
             android:textColor="#90000000"
             android:fontFamily="@font/poppins_semibold"
             android:textSize="13dp"
@@ -54,21 +64,63 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/DatosVehiculo" />
 
+        <TextView
+            android:id="@+id/textounidad"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingRight="30dp"
+            android:fontFamily="@font/poppins"
+            android:visibility="invisible"
+            android:text="Unidad"
+            android:textColor="#011855"
+            android:textSize="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ingresadatosvehiculo" />
+
+        <ImageView
+            android:id="@+id/imageunidad"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
+            android:visibility="invisible"
+            android:paddingTop="10dp"
+            android:src="@drawable/logotransparente"
+            app:layout_constraintStart_toEndOf="@+id/textounidad"
+            app:layout_constraintTop_toBottomOf="@+id/ingresadatosvehiculo">
+
+        </ImageView>
+
+        <TextView
+            android:id="@+id/txtnumberuniad"
+            android:layout_width="0dp"
+            android:visibility="invisible"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:fontFamily="@font/poppins"
+            android:text="07"
+            android:textColor="#011855"
+            android:textSize="20dp"
+            android:paddingLeft="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintLeft_toLeftOf="@+id/imageunidad"
+            app:layout_constraintStart_toEndOf="@+id/imageunidad"
+            app:layout_constraintTop_toBottomOf="@+id/ingresadatosvehiculo" />
+
         <!--Ingreso de datos-->
 
         <TextView
             android:id="@+id/Operador"
             android:layout_width="0dp"
-            android:layout_height="21dp"
-            android:layout_marginTop="33dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
             android:fontFamily="@font/poppins"
-            android:text="Opeador"
+            android:text="Operador"
             android:textColor="#011855"
             android:textSize="18dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ingresadatosvehiculo" />
+            app:layout_constraintTop_toBottomOf="@+id/txtnumberuniad" />
 
         <EditText
             android:id="@+id/EditTextOperador"
@@ -89,7 +141,7 @@
         <TextView
             android:id="@+id/Numerodeplaca"
             android:layout_width="0dp"
-            android:layout_height="21dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="28dp"
             android:fontFamily="@font/poppins"
             android:text="Número de placa"
@@ -118,7 +170,7 @@
         <TextView
             android:id="@+id/Departede"
             android:layout_width="0dp"
-            android:layout_height="23dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="28dp"
             android:fontFamily="@font/poppins"
             android:text="Departe de"
@@ -146,7 +198,7 @@
         <TextView
             android:id="@+id/Litroscargados"
             android:layout_width="0dp"
-            android:layout_height="23dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="28dp"
             android:fontFamily="@font/poppins"
             android:text="Litros cargados"
@@ -175,7 +227,7 @@
         <TextView
             android:id="@+id/numerofolio"
             android:layout_width="0dp"
-            android:layout_height="23dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="28dp"
             android:fontFamily="@font/poppins"
             android:text="Número de folio"
@@ -204,10 +256,10 @@
         <TextView
             android:id="@+id/mgjyempresa"
             android:layout_width="0dp"
-            android:layout_height="23dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="28dp"
             android:fontFamily="@font/poppins"
-            android:text="Empresa externa"
+            android:text="Empresa"
             android:textColor="#011855"
             android:textSize="18dp"
             app:layout_constraintEnd_toEndOf="parent"

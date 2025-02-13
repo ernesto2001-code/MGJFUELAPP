@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/unidad_externa"
+        android:checkable="true"
+        android:title="Unidad externa" />
+
+    <item
+        android:id="@+id/mgj01"
+        android:title="MGJ 01"
+        android:checkable="true" />
+
+    <item
+        android:id="@+id/mgj02"
+        android:title="MGJ 02"
+        android:checkable="true" />
+    <item
+        android:id="@+id/mgj04"
+        android:title="MGJ 04"
+        android:checkable="true" />
+    <item
+        android:id="@+id/mgj05"
+        android:title="MGJ 05"
+        android:checkable="true" />
+    <item
+        android:id="@+id/mgj06"
+        android:title="MGJ 06"
+        android:checkable="true" />
+    <item
+        android:id="@+id/mgj07"
+        android:title="MGJ 07"
+        android:checkable="true" />
+    <item
+        android:id="@+id/mgj08"
+        android:title="MGJ 08"
+        android:checkable="true" />
+    <item
+        android:id="@+id/mgj09"
+        android:title="MGJ 09"
+        android:checkable="true" />
+    <item
+        android:id="@+id/mgj10"
+        android:title="MGJ 10"
+        android:checkable="true" />
+    <item
+        android:id="@+id/mgj11"
+        android:title="MGJ 11"
+        android:checkable="true" />
+    <item
+        android:id="@+id/mgj12"
+        android:title="MGJ 12"
+        android:checkable="true" />
+</menu>
