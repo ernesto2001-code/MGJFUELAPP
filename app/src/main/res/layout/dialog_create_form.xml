@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="350dp"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:clipChildren="false"
+    android:clipToPadding="false">
+
+    <!-- Círculo con icono de advertencia (fuera del CardView) -->
+    <FrameLayout
+        android:id="@+id/circleContainer"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+
+        android:layout_centerHorizontal="true"
+        android:elevation="10dp"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- Fondo blanco exterior -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/circle_withe_background"/>
+
+        <!-- Círculo rojo con icono -->
+        <ImageView
+            android:id="@+id/iconWarning"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:src="@drawable/outline_error_24"
+            android:background="@drawable/circle_background"
+            android:padding="10dp"/>
+    </FrameLayout>
+
+    <!-- CardView principal -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardDialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="20dp"
+        android:translationY="-35dp"
+        android:backgroundTint="@color/white"
+        android:paddingTop="50dp"
+
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        app:layout_constraintTop_toBottomOf="@id/circleContainer">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipChildren="false"
+            android:clipToPadding="false">
+
+            <TextView
+                android:id="@+id/txtSeguro"
+                android:layout_width="270dp"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="45dp"
+                android:fontFamily="@font/poppins_bold"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:text="¿Estás seguro que quieres crear esta carga?"
+                android:gravity="center"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtSeguro"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:clipChildren="false"
+                android:clipToPadding="false">
+
+                <Button
+                    android:id="@+id/btnNo"
+                    android:layout_width="0dp"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:layout_margin="10dp"
+                    app:cornerRadius="15dp"
+                    android:fontFamily="@font/poppins_bold"
+                    android:textSize="15sp"
+                    android:text="CANCELAR"
+                    android:backgroundTint="#FF0004"/>
+
+                <Button
+                    android:id="@+id/btnSi"
+                    android:layout_width="0dp"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:layout_margin="10dp"
+                    app:cornerRadius="15dp"
+                    android:fontFamily="@font/poppins_bold"
+                    android:textSize="15sp"
+                    android:text="ACEPTAR"
+                    android:backgroundTint="#009D2D"/>
+            </LinearLayout>
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

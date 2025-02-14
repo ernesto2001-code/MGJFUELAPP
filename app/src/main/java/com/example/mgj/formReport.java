@@ -1,8 +1,12 @@
 package com.example.mgj;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -15,7 +19,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.mgj.components.DialogElement;
+import com.example.mgj.components.SnackBarElement;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class formReport extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     Button SaveReport;
@@ -25,6 +42,9 @@ public class formReport extends AppCompatActivity implements AdapterView.OnItemS
     String[] opciones = {"-", "mgj", "kristel", "lucy", "ulises"};
     ImageView btnsalir, imageunidad;
     ImageButton Buttonimage;
+    FirebaseAuth fAuth;
+    SnackBarElement snackBar;
+    DialogElement dialog;
     private int selectedForm = R.id.unidad_externa;
 
     @Override
@@ -32,10 +52,13 @@ public class formReport extends AppCompatActivity implements AdapterView.OnItemS
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_form_report);
+        snackBar = new SnackBarElement(this);
+        dialog = new DialogElement(this);
 
         Spinerpartede = findViewById(R.id.Spinerpartede);
         SaveReport = findViewById(R.id.btn_image);
         btnsalir = findViewById(R.id.salir);
+        fAuth = FirebaseAuth.getInstance();
         mgjyempresa = findViewById(R.id.mgjyempresa);
         EditTextOperador = findViewById(R.id.EditTextOperador);
         EditTextNumeroPlaca = findViewById(R.id.EditTextNumeroPlaca);
@@ -52,12 +75,76 @@ public class formReport extends AppCompatActivity implements AdapterView.OnItemS
         textounidad.setVisibility(View.INVISIBLE);
         txtnumberuniad.setVisibility(View.INVISIBLE);
 
-        // Configurar spinner de tipo de vehículo
+        // Configurar spinner opciones departe de
         ArrayAdapter<String> aa = new ArrayAdapter<>(formReport.this, R.layout.listviewresours, opciones);
         Spinerpartede.setAdapter(aa);
         Spinerpartede.setOnItemSelectedListener(this);
+        btnsalir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
 
         Buttonimage.setOnClickListener(v -> showPopupMenu());
+
+        SaveReport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                saveReport();
+            }
+        });
+    }
+
+    //Metodo para guardar el reporte en firestore
+    private void saveReport() {
+        String operador = EditTextOperador.getText().toString();
+        String numeroplaca = EditTextNumeroPlaca.getText().toString();
+        String departede = Spinerpartede.getSelectedItem().toString();
+        String litros = EditTextLitros.getText().toString();
+        String folio = EditTextFolio.getText().toString();
+        String empresa = EditTextmgjyempresa.getText().toString();
+        String unidad = txtnumberuniad.getText().toString();
+        String creadopor = "Dnwb2cMsBuUub9dEtjTtHmUJRA92";
+
+        if (operador.isEmpty()) {
+            EditTextOperador.requestFocus();
+            EditTextOperador.setError("Este campo es requerido");
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+            return;
+        }
+        if (numeroplaca.isEmpty()) {
+            EditTextNumeroPlaca.requestFocus();
+            EditTextNumeroPlaca.setError("Este campo es requerido");
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+            return;
+        }
+        if (departede.equals("-")) {
+            ((TextView) Spinerpartede.getSelectedView()).setError("Este campo es requerido");
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+            return;
+        }
+        if (litros.isEmpty()) {
+            EditTextLitros.requestFocus();
+            EditTextLitros.setError("Este campo es requerido");
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+            return;
+        }
+        if (folio.isEmpty()) {
+            EditTextFolio.requestFocus();
+            EditTextFolio.setError("Este campo es requerido");
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+            return;
+        }
+        if (empresa.isEmpty()) {
+            EditTextmgjyempresa.requestFocus();
+            EditTextmgjyempresa.setError("Este campo es requerido");
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+            return;
+        }
+        dialog.showDialogConfirmPredeterminado(operador, numeroplaca,departede, litros,folio,empresa,unidad, creadopor);
+
     }
 
     private void showPopupMenu() {
@@ -232,4 +319,11 @@ public class formReport extends AppCompatActivity implements AdapterView.OnItemS
     public void onNothingSelected(AdapterView<?> adapterView) {
         // Método necesario para el Spinner
     }
+    @SuppressLint("MissingSuperCall")
+    @Override
+    public void onBackPressed() {
+        dialog.showDialogWarningExit();
+
+    }
+
 }
