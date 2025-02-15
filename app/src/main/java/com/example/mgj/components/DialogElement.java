@@ -25,7 +25,9 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class DialogElement {
@@ -94,6 +96,7 @@ public class DialogElement {
         btnSi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                btnSi.setEnabled(false);
                 // Crear mapa de datos para Firestore
                 Map<String, Object> reporte = new HashMap<>();
                 reporte.put("operator_name", operador);
@@ -104,7 +107,17 @@ public class DialogElement {
                 reporte.put("company", empresa);
                 reporte.put("created_by", creadopor);// se cammbiara cuando inicie sesion  fAuth.getUid()
                 reporte.put("unidad", unidad);
-                reporte.put("timestamp", FieldValue.serverTimestamp()); // Agregar timestamp
+                reporte.put("timestamp", FieldValue.serverTimestamp());// Agregar timestamp
+
+                List<String> keywords = new ArrayList<>();
+                keywords.add(operador.toLowerCase());
+                keywords.add(unidad.toLowerCase());
+                keywords.add(folio.toLowerCase());
+                keywords.add(litros.toLowerCase());
+                keywords.add(empresa.toLowerCase());
+                keywords.add(numeroplaca.replace("-", "").toLowerCase()); // Quita los guiones
+                keywords.add(departede.toLowerCase());
+                reporte.put("searchKeywords", keywords);
 
                 // 🔹 Guardar en tanks/tank1/reports
                 fStore.collection("tanks")
@@ -130,6 +143,7 @@ public class DialogElement {
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
+                                btnSi.setEnabled(true);
                                 snackbar.showSnackBar(activity.getResources().getColor(R.color.red),"Error al crear la Publicacion");
                             }
                         });
@@ -142,6 +156,7 @@ public class DialogElement {
         btnNo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                btnNo.setEnabled(false);
                 d_edit.dismiss();
             }
         });

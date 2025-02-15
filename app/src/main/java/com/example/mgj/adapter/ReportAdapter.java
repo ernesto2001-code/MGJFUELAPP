@@ -112,8 +112,10 @@ public class ReportAdapter extends FirestoreRecyclerAdapter<Report, ReportAdapte
                 i.putExtra("compañia",report.getCompany());
                 i.putExtra("unidad", report.getUnidad());
                 i.putExtra("creadopor", report.getCreated_by());
-                i.putExtra("departede", report.getChargefromby());
-                i.putExtra("fechayhora", report.getTimestamp());
+                i.putExtra("departede", report.getChargefromby());java.text.SimpleDateFormat dateFormat = new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm");
+                String formattedDate2 = dateFormat.format(report.getTimestamp().toDate());
+
+                i.putExtra("fechayhora", formattedDate2);
                 activity.startActivity(i);
                 if (listener != null) {
                     listener.onItemClick(getSnapshots().getSnapshot(position), position);

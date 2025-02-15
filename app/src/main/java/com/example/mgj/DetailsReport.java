@@ -3,6 +3,8 @@ package com.example.mgj;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -12,6 +14,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.mgj.components.DialogElement;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -25,8 +28,10 @@ import java.util.Locale;
 
 public class DetailsReport extends AppCompatActivity {
     FirebaseFirestore fStore;
-    TextView litros, folio, departede, nombrecargo, nummgj, operador, placas, empresa, cargo;
+    TextView litros, folio, departede, nombrecargo, nummgj, operador, placas, empresa, cargo, date;
     String idacargo;
+    ImageView backbutton;
+    DialogElement dialog;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -34,6 +39,7 @@ public class DetailsReport extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details_report);
         litros = findViewById(R.id.txt_liters);
+        dialog = new DialogElement(this);
         folio = findViewById(R.id.txt_folio);
         departede = findViewById(R.id.txt_departede);
         nombrecargo = findViewById(R.id.txt_name);
@@ -42,6 +48,8 @@ public class DetailsReport extends AppCompatActivity {
         placas = findViewById(R.id.txt_numeroplacas);
         empresa = findViewById(R.id.txt_empresa);
         cargo = findViewById(R.id.txt_cargo);
+        date = findViewById(R.id.txt_date);
+        backbutton = findViewById(R.id.backbutton);
 
         fStore = FirebaseFirestore.getInstance();
         // Obtén los datos del Intent
@@ -53,6 +61,7 @@ public class DetailsReport extends AppCompatActivity {
         final String operadortexto = getIntent().getStringExtra("operator");
         final String placastexto = getIntent().getStringExtra("placas");
         final String empresatexto = getIntent().getStringExtra("compañia");
+        final String fechayhora = getIntent().getStringExtra("fechayhora");
 
         litros.setText(litrostexto);
         folio.setText(foliotexto);
@@ -61,7 +70,15 @@ public class DetailsReport extends AppCompatActivity {
         operador.setText(operadortexto);
         empresa.setText(empresatexto);
         placas.setText(placastexto);
+        date.setText(fechayhora);
         setInformation(idacargo);
+
+        backbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
     }
 
     private void setInformation(String idacargo) {
@@ -88,6 +105,11 @@ public class DetailsReport extends AppCompatActivity {
                 }
             }
         });
+    }
+    @SuppressLint("MissingSuperCall")
+    @Override
+    public void onBackPressed() {
+        dialog.showDialogWarningExit();
     }
 
 
